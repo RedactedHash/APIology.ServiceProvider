@@ -1,4 +1,4 @@
-﻿namespace APIology.Runner.Core
+﻿namespace APIology.ServiceProvider.Configuration
 {
 	using Microsoft.Extensions.Configuration;
 	using Newtonsoft.Json;

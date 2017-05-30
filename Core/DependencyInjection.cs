@@ -1,4 +1,4 @@
-﻿namespace APIology.Runner.Core
+﻿namespace APIology.ServiceProvider.Core
 {
 	using Configuration;
 	using Autofac;
@@ -15,7 +15,7 @@
 			=> new Lazy<IContainer>(() => Container);
 
 		public static void CreateContainerFor<T>()
-			where T : ServiceConfiguration, new()
+			where T : BaseServiceConfiguration, new()
 		{
 			var builder = new ContainerBuilder();
 
@@ -27,13 +27,13 @@
 			if (ReferenceEquals(assembly, null))
 			{
 				throw new EntryPointNotFoundException(
-					$"No compatible implementation of {nameof(ServiceBase<T>)} can be found.");
+					$"No compatible implementation of {nameof(BaseServiceProvider<T>)} can be found.");
 			}
 
-			builder.RegisterAssemblyModules<ServiceBase<T>>(assembly);
+			builder.RegisterAssemblyModules<BaseServiceProvider<T>>(assembly);
 
 			builder.Register(ctx => {
-				var service = ctx.Resolve<IServiceBase>();
+				var service = ctx.Resolve<ISystemServiceProvider>();
 
 				var cb = service.BuildConfiguration(new ConfigurationBuilder());
 				var conf = new T {

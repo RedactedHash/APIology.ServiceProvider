@@ -1,4 +1,4 @@
-﻿namespace APIology.Runner.Core
+﻿namespace APIology.ServiceProvider.Core
 {
 	using Autofac;
 	using Autofac.Core;
@@ -6,7 +6,7 @@
 	using Serilog;
 	using Topshelf;
 
-	public interface IServiceBase : ServiceControl, IModule
+	public interface ISystemServiceProvider : ServiceControl, IModule
 	{
 		ILogger Logger { get; set; }
 

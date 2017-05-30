@@ -1,4 +1,4 @@
-﻿namespace APIology.Runner.Core
+﻿namespace APIology.ServiceProvider.Core
 {
 	using Configuration;
 	using Autofac;
@@ -6,15 +6,16 @@
 	using System;
 	using System.Diagnostics;
 	using System.Diagnostics.CodeAnalysis;
-	using System.Reflection;
 	using Topshelf;
-	using DI = DependencyInjection;
 	using Microsoft.Extensions.Configuration;
 	using System.Linq;
 
+	using DI = DependencyInjection;
+	using static System.Reflection.Assembly;
+
 	[SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
-	public abstract class ServiceBase<TConfiguration> : Autofac.Module, IServiceBase
-		where TConfiguration : ServiceConfiguration, new()
+	public abstract class BaseServiceProvider<TConfiguration> : Module, ISystemServiceProvider
+		where TConfiguration : BaseServiceConfiguration, new()
 	{
 		private static string[] StartupMessagesToIgnore = new[] {
 			"Configuration Result:\n{0}",
@@ -38,7 +39,7 @@
 					hostConfigurator.Service<ServiceControl>(serviceConfigurator => {
 						serviceConfigurator.ConstructUsing(hostSettings => {
 							DI.CreateContainerFor<TConfiguration>();
-							return DI.Container.Resolve<IServiceBase>();
+							return DI.Container.Resolve<ISystemServiceProvider>();
 						});
 						serviceConfigurator.WhenStarted((s, h) => s.Start(h));
 						serviceConfigurator.WhenStopped((s, h) => s.Stop(h));
@@ -48,7 +49,7 @@
 					});
 
 					hostConfigurator.RunAsLocalSystem();
-					hostConfigurator.UseAssemblyInfoForServiceInfo(Assembly.GetEntryAssembly());
+					hostConfigurator.UseAssemblyInfoForServiceInfo(GetEntryAssembly());
 				});
 			}
 			catch (Exception ex)
@@ -88,7 +89,7 @@
 			builder.RegisterInstance(this)
 				.PropertiesAutowired(PropertyWiringOptions.PreserveSetValues)
 				.SingleInstance()
-				.As<IServiceBase>()
+				.As<ISystemServiceProvider>()
 				.AsSelf();
 
 			BuildDependencyContainer(builder);

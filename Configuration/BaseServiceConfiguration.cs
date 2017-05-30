@@ -1,19 +1,15 @@
-﻿namespace APIology.Runner.Configuration
+﻿namespace APIology.ServiceProvider.Configuration
 {
 	using Core;
 	using Serilog;
 	using System;
 	using Microsoft.Extensions.Configuration;
 
-	public class ServiceConfiguration : IServiceConfiguration
+	public class BaseServiceConfiguration : IServiceConfiguration
 	{
-		static ServiceConfiguration()
-		{
-		}
+		private ISystemServiceProvider _service;
 
-		private IServiceBase _service;
-
-		public IServiceBase Service {
+		public ISystemServiceProvider Service {
 			get {
 				return _service;
 			}
