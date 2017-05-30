@@ -1,2 +1,2 @@
 # APIology.Runner
-Topshelf-based C# service runner
+C# Microservice Framework combining TopShelf, Autofac, Serilog, and Microsoft.Extensions.Configuration
