@@ -1,0 +1,22 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  informational_version: '{version}'
+build_script:
+- ps: >-
+    dotnet restore
+
+    dotnet build
+
+    dotnet pack
+artifacts:
+- path: bin/Debug/APIology.ServiceProvider.*.nupkg
+  name: Package
+deploy:
+- provider: NuGet
+  api_key:
+    secure: 7xb7MphYa3LeOewrQzRnGnYKs6rR01LyhP/C3583s5vkSrIV8Q1BgS8MI0aWcZ/G
+  artifact: Package
