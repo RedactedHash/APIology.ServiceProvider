@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>net452;net461</TargetFrameworks>
+    <Version>1.0.0</Version>
+    <InformationalVersion>1.0.0</InformationalVersion>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
@@ -16,5 +16,4 @@
     <PackageReference Include="Topshelf" Version="4.0.3" />
     <PackageReference Include="Topshelf.Serilog" Version="4.0.3" />
   </ItemGroup>
-
 </Project>
