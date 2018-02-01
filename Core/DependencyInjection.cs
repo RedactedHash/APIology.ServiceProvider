@@ -19,15 +19,15 @@
 		{
 			var builder = new ContainerBuilder();
 
-			AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += (sender, args) =>
-				Assembly.ReflectionOnlyLoad(args.Name);
+			/*AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += (sender, args) =>
+				Assembly.ReflectionOnlyLoad(args.Name);*/
 
 			var assembly = Assembly.GetEntryAssembly();
 
 			if (ReferenceEquals(assembly, null))
 			{
-				throw new EntryPointNotFoundException(
-					$"No compatible implementation of {nameof(BaseServiceProvider<T>)} can be found.");
+				/*throw new EntryPointNotFoundException(
+					$"No compatible implementation of {nameof(BaseServiceProvider<T>)} can be found.");*/
 			}
 
 			builder.RegisterAssemblyModules<BaseServiceProvider<T>>(assembly);
@@ -51,7 +51,7 @@
 					service.Logger = Log.Logger = logConf.CreateLogger();
 				}
 
-				var dllPath = conf.DllPath.Replace(AppDomain.CurrentDomain.BaseDirectory, "");
+				var dllPath = conf.DllPath.Replace(assembly.Location, "");
 				service.Logger.Information("registered service from {DllPath}", dllPath);
 
 				return conf;

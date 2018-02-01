@@ -1,4 +1,6 @@
-﻿namespace APIology.ServiceProvider.Configuration
+﻿using System.Reflection;
+
+namespace APIology.ServiceProvider.Configuration
 {
 	using Core;
 	using Serilog;
@@ -15,8 +17,8 @@
 			}
 			set {
 				_service = value;
-				_dllPath = new Lazy<string>(() => Type.Assembly.Location);
-				_lazyName = new Lazy<string>(() => Type.Assembly.FullName.Split(',')[0]);
+				_dllPath = new Lazy<string>(() => Type.GetTypeInfo().Assembly.Location);
+				_lazyName = new Lazy<string>(() => Type.GetTypeInfo().Assembly.FullName.Split(',')[0]);
 			}
 		}
 

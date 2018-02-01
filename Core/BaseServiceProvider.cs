@@ -1,4 +1,5 @@
-﻿namespace APIology.ServiceProvider.Core
+﻿// ReSharper disable StaticMemberInGenericType
+namespace APIology.ServiceProvider.Core
 {
 	using Configuration;
 	using Autofac;
@@ -17,7 +18,7 @@
 	public abstract class BaseServiceProvider<TConfiguration> : Module, ISystemServiceProvider
 		where TConfiguration : BaseServiceConfiguration, new()
 	{
-		private static string[] StartupMessagesToIgnore = new[] {
+		private static readonly string[] StartupMessagesToIgnore = {
 			"Configuration Result:\n{0}",
 			"{0} v{1}, .NET Framework v{2}"
 		};
@@ -47,8 +48,7 @@
 							DI.Container.Dispose();
 						});
 					});
-
-					hostConfigurator.RunAsLocalSystem();
+					
 					hostConfigurator.UseAssemblyInfoForServiceInfo(GetEntryAssembly());
 				});
 			}
