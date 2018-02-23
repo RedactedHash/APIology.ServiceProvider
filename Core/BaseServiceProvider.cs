@@ -58,6 +58,9 @@ namespace APIology.ServiceProvider.Core
 					Debugger.Break();
 				}
 				Log.Logger?.Fatal(ex, "A fatal error has occurred");
+				if (Environment.UserInteractive) {
+					Console.ReadKey();
+				}
 			}
 		}
 

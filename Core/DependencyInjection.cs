@@ -26,8 +26,8 @@
 
 			if (ReferenceEquals(assembly, null))
 			{
-				/*throw new EntryPointNotFoundException(
-					$"No compatible implementation of {nameof(BaseServiceProvider<T>)} can be found.");*/
+				throw new Exception(
+					$"No compatible implementation of {nameof(BaseServiceProvider<T>)} can be found.");
 			}
 
 			builder.RegisterAssemblyModules<BaseServiceProvider<T>>(assembly);
