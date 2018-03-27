@@ -4,6 +4,7 @@
 	using Autofac;
 	using Serilog;
 	using System;
+	using System.IO;
 	using System.Reflection;
 	using Microsoft.Extensions.Configuration;
 
@@ -51,7 +52,8 @@
 					service.Logger = Log.Logger = logConf.CreateLogger();
 				}
 
-				var dllPath = conf.DllPath.Replace(assembly.Location, "");
+				var dllPath = conf.DllPath.Replace(Path.GetDirectoryName(assembly.Location) ?? "", "")
+					.TrimStart(Path.DirectorySeparatorChar);
 				service.Logger.Information("registered service from {DllPath}", dllPath);
 
 				return conf;
